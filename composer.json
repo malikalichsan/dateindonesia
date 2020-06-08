@@ -3,7 +3,8 @@
     "description": "Parse date to ID",
     "type": "library",
     "require": {
-        "nesbot/carbon": "^2.35"
+        "nesbot/carbon": "^2.35",
+        "illuminate/translation": "^7.14"
     },
     "license": "MIT",
     "authors": [

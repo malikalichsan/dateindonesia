@@ -3,10 +3,29 @@
 namespace Malikalichsan\DateIndonesia;
 
 use Carbon\Carbon;
+use Illuminate\Filesystem\Filesystem;
+use Illuminate\Translation;
+use Illuminate\Contracts\Translation\Loader;
 
 class DateIndonesia
 {
-    public static function getDay($day)
+    public $lang;
+
+    public function __construct($lang = 'id')
+    {
+        $this->lang = $this->trans($lang);
+    }
+
+    public function trans($lang)
+    {
+        $filesystem    = new Filesystem();
+        $loader        = new Translation\FileLoader($filesystem, dirname(dirname(__FILE__)) . '/src/lang');
+        $loader->addNamespace('lang', dirname(dirname(__FILE__)) . '/lang');
+        $loader->load($lang, 'validation', 'lang');
+        return new Translation\Translator($loader, $lang);
+    }
+
+    public function getDay($day)
     {
         /**
          * 0 (for Sunday) through 6 (for Saturday)
@@ -14,25 +33,25 @@ class DateIndonesia
 
         switch ($day) {
             case 0:
-                $res = 'Minggu';
+                $res = $this->lang->get('message.days.00');
                 break;
             case 1:
-                $res = 'Senin';
+                $res = $this->lang->get('message.days.01');
                 break;
             case 2:
-                $res = 'Selasa';
+                $res = $this->lang->get('message.days.02');
                 break;
             case 3:
-                $res = 'Rabu';
+                $res = $this->lang->get('message.days.03');
                 break;
             case 4:
-                $res = 'Kamis';
+                $res = $this->lang->get('message.days.04');
                 break;
             case 5:
-                $res = 'Jumat';
+                $res = $this->lang->get('message.days.05');
                 break;
             case 6:
-                $res = 'Sabtu';
+                $res = $this->lang->get('message.days.06');
                 break;
             default:
                 $res = "";
@@ -41,7 +60,7 @@ class DateIndonesia
         return $res;
     }
 
-    public static function getMonth($month)
+    public function getMonth($month)
     {
         /**
          * 01 through 12
@@ -49,40 +68,40 @@ class DateIndonesia
 
         switch ($month) {
             case 1:
-                $res = 'Januari';
+                $res = $this->lang->get('message.months.01');
                 break;
             case 2:
-                $res = 'Februari';
+                $res = $this->lang->get('message.months.02');
                 break;
             case 3:
-                $res = 'Maret';
+                $res = $this->lang->get('message.months.03');
                 break;
             case 4:
-                $res = 'April';
+                $res = $this->lang->get('message.months.04');
                 break;
             case 5:
-                $res = 'Mei';
+                $res = $this->lang->get('message.months.05');
                 break;
             case 6:
-                $res = 'Juni';
+                $res = $this->lang->get('message.months.06');
                 break;
             case 7:
-                $res = 'Juli';
+                $res = $this->lang->get('message.months.07');
                 break;
             case 8:
-                $res = 'Agustus';
+                $res = $this->lang->get('message.months.08');
                 break;
             case 9:
-                $res = 'September';
+                $res = $this->lang->get('message.months.09');
                 break;
             case 10:
-                $res = 'Oktober';
+                $res = $this->lang->get('message.months.10');
                 break;
             case 11:
-                $res = 'November';
+                $res = $this->lang->get('message.months.11');
                 break;
             case 12:
-                $res = 'Desember';
+                $res = $this->lang->get('message.months.12');
                 break;
             default:
                 $res = "";
@@ -91,15 +110,15 @@ class DateIndonesia
         return $res;
     }
 
-    public static function getFormatted($data)
+    public function getFormatted($data)
     {
         /**
          * date format in param should be
          * w d m Y H i T
          */
         $explodeData    = explode(' ', $data);
-        $day            = self::getDay($explodeData[0]);
-        $month          = self::getMonth($explodeData[2]);
+        $day            = $this->getDay($explodeData[0]);
+        $month          = $this->getMonth($explodeData[2]);
         $date           = $explodeData[1];
         $year           = $explodeData[3];
         $hour           = $explodeData[4];
