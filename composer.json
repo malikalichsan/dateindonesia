@@ -1,0 +1,19 @@
+{
+    "name": "malikalichsan/dateindonesia",
+    "description": "Parse date to ID",
+    "type": "library",
+    "require": {
+        "nesbot/carbon": "^2.35"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "malikalichsan",
+            "email": "malik.al.ichsan@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {"Malikalichsan\\DateIndonesia\\": "src/"}
+    }
+}
