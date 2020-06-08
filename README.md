@@ -9,7 +9,7 @@ $ composer require malikalichsan/dateindonesia
 use Malikalichsan\DateIndonesia\DateIndonesia;
 use Carbon\Carbon;
 
-DateIndonesia::getFormatted(Carbon::now()->format('w d m Y H i T'));
+$date = (new DateIndonesia())->getFormatted(Carbon::now()->format('w d m Y H i T'));
 ```
 
 ## Test:
